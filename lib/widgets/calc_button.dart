@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:calculator_app/constants.dart';
 
 class CalculatorButton extends StatefulWidget {
-  const CalculatorButton({super.key, required this.buttonLabel, required this.buttonOnPressed});
+  const CalculatorButton(
+      {super.key, required this.buttonLabel, required this.buttonOnPressed, this.color});
 
   final String buttonLabel;
-  final buttonOnPressed;
+  final Color? color;
+  final Function buttonOnPressed;
 
   @override
   State<CalculatorButton> createState() => _CalculatorButtonState();
@@ -14,18 +15,26 @@ class CalculatorButton extends StatefulWidget {
 class _CalculatorButtonState extends State<CalculatorButton> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: OutlinedButton(
-          style: outlinedButtonStyle,
-          onPressed: widget.buttonOnPressed,
-          child: Text(
-            widget.buttonLabel,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.w600
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width * .25,
+      height: size.height * .098,
+      child: Material(
+        color: widget.color ?? const Color(0xff0C344F),
+        child: InkWell(
+          onTap: () {
+            widget.buttonOnPressed();
+          },
+          child: Center(
+            child: Text(
+              widget.buttonLabel,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600),
             ),
           ),
+        ),
       ),
     );
   }
